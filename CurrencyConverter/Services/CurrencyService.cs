@@ -42,16 +42,16 @@ namespace CurrencyConverter.Services
         public double GetTotalValue(TotalRateRequest[] convertedValues, string convertToId)
         {
             double total = 0;
-            foreach(var value in convertedValues)
+            var date = GetClosestValidDate();
+
+            foreach (var value in convertedValues)
             {
                 if (value.CurrencyFromId == convertToId)
                 {
                     total += value.Input;
                     continue;
                 }
-
-                var date = GetClosestValidDate();
-
+              
                 var request = CreateCrossRateRequest(value.CurrencyFromId, convertToId, date);
                 var result = soapClient.getCrossRates(request);
 
