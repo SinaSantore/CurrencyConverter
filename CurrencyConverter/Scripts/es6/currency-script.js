@@ -5,7 +5,6 @@ import {
   fetchCurrencies,
   getTotalValue,
 } from "./currency-requests";
-import { daysOfWeekDisabled } from "bootstrap-datepicker";
 
 const calculateTotal = (selected) => {
   let table = $("#result-table").DataTable();
