@@ -6,7 +6,12 @@ import {
   getTotalValue,
 } from "./currency-requests";
 
-const calculateTotal = (selected) => {
+export const setTotalText = (text = "Total: ") => {
+  let totalDiv = document.getElementById("currency-sum");
+  totalDiv.innerText = text;
+};
+
+export const calculateTotal = (selected) => {
   let table = $("#result-table").DataTable();
   let convertedValues = [];
 
@@ -20,6 +25,8 @@ const calculateTotal = (selected) => {
 
   if (convertedValues.length > 0) {
     getTotalValue(convertedValues, selected);
+  } else {
+    setTotalText();
   }
 };
 
@@ -31,6 +38,13 @@ const addEventListeners = () => {
   $("#result-table tbody").on("click", "button", function () {
     let table = $("#result-table").DataTable();
     table.row($(this).parents("tr")).remove().draw();
+
+    if (table.row().length > 0) {
+      let selected = $("#currency-dropdown-total option:selected").val();
+      calculateTotal(selected);
+    } else {
+      setTotalText();
+    }
   });
 
   $("#currency-dropdown-total").on("change", (event) => {

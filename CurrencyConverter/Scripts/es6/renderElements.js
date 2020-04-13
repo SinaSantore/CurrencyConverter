@@ -58,6 +58,7 @@ export const renderSumElements = (currencyList) => {
   let textDiv = document.createElement("div");
   let innerText = document.createTextNode("Total ");
   textDiv.className = "sum";
+  textDiv.id = "currency-sum";
   textDiv.appendChild(innerText);
 
   sumContainer.appendChild(textDiv);

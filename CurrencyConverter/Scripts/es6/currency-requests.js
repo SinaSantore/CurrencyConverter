@@ -1,3 +1,5 @@
+import { setTotalText, calculateTotal } from "./currency-script";
+
 export const fetchCurrencies = () => {
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -28,6 +30,11 @@ export const submitForm = () => {
     success: (response) => {
       let t = $("#result-table").DataTable();
       t.row.add(response).draw();
+
+      let selected = $("#currency-dropdown-total option:selected").val();
+      if (selected !== null) {
+        calculateTotal(selected);
+      }
     },
     error: (res) => {
       console.log(res.responseJSON);
@@ -45,9 +52,7 @@ export const getTotalValue = (convertedValues, selected) => {
     }),
     contentType: "application/json; charset=utf-8",
     success: (response) => {
-      let totalDiv = document.querySelector(".sum");
-      let innerText = document.createTextNode("Total: " + response);
-      totalDiv.innerText = innerText.textContent;
+      setTotalText("Total: " + response);
     },
     error: (res) => {
       console.log(res.responseJSON);
